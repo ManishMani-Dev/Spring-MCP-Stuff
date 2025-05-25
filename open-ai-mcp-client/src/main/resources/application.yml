@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
+
+spring:
+  application:
+    name: open-ai-mcp-client
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.openai.com #https://api.openai.com/v1
+      chat:
+        model: gpt-3.5-turbo #gpt-4o-mini
+
+    mcp:
+      client:
+        enabled: true
+        initialized: true
+        type: SYNC
+        request-timeout: 20s
+        toolcallback:
+          enabled: true
+
+        # HTTP/SSE transport
+        sse:
+          connections:
+            open-ai-mcp-server:
+              url: http://localhost:8081
+
+        # Uncomment to use STDIO transport instead:
+        # stdio:
+        #   servers-configuration: classpath:mcp-servers-config.json
+
